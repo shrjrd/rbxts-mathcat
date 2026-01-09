@@ -1,5 +1,5 @@
 ```sh
-> npm install mathcat
+> npm install @rbxts/mathcat
 ```
 
 # mathcat
