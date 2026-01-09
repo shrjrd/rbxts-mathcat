@@ -29,7 +29,7 @@
 		"build": "rbxtsc",
 		"build:dev": "rbxtsc --type game --rojo default.project.json",
 		"build:rbxl": "rojo sourcemap -o sourcemap.json && rojo build -o project.rbxl",
-		"watch": "npm run build:dev && npx concurrently \"npm run build:dev -- -w\" \"mise exec -- rojo serve\""
+		"watch": "npm run build:dev && npx concurrently \"npm run build:dev -- -w\" \"rojo serve\""
 	},
 	"publishConfig": {
 		"access": "public"
