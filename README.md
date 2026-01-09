@@ -1,5 +1,3 @@
-![cover](./docs/cover.png)
-
 ```sh
 > npm install mathcat
 ```
@@ -6459,5 +6457,4 @@ export function remap(number: number, inLow: number, inHigh: number, outLow: num
  */
 export function remapClamp(value: number, inLow: number, inHigh: number, outLow: number, outHigh: number): number;
 ```
-
 

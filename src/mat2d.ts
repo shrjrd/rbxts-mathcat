@@ -1,5 +1,5 @@
-import * as common from './common';
-import type { Mat2d, Vec2 } from './types';
+import * as common from "./common";
+import type { Mat2d, Vec2 } from "./types";
 
 /**
  * Creates a new identity mat2d
@@ -7,7 +7,7 @@ import type { Mat2d, Vec2 } from './types';
  * @returns a new 2x3 matrix
  */
 export function create(): Mat2d {
-    return [1, 0, 0, 1, 0, 0];
+	return [1, 0, 0, 1, 0, 0];
 }
 
 /**
@@ -17,14 +17,14 @@ export function create(): Mat2d {
  * @returns a new 2x3 matrix
  */
 export function clone(a: Mat2d): Mat2d {
-    const out = create();
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    out[4] = a[4];
-    out[5] = a[5];
-    return out;
+	const out = create();
+	out[0] = a[0];
+	out[1] = a[1];
+	out[2] = a[2];
+	out[3] = a[3];
+	out[4] = a[4];
+	out[5] = a[5];
+	return out;
 }
 
 /**
@@ -35,13 +35,13 @@ export function clone(a: Mat2d): Mat2d {
  * @returns out
  */
 export function copy(out: Mat2d, a: Mat2d): Mat2d {
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    out[4] = a[4];
-    out[5] = a[5];
-    return out;
+	out[0] = a[0];
+	out[1] = a[1];
+	out[2] = a[2];
+	out[3] = a[3];
+	out[4] = a[4];
+	out[5] = a[5];
+	return out;
 }
 
 /**
@@ -51,13 +51,13 @@ export function copy(out: Mat2d, a: Mat2d): Mat2d {
  * @returns out
  */
 export function identity(out: Mat2d): Mat2d {
-    out[0] = 1;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 1;
-    out[4] = 0;
-    out[5] = 0;
-    return out;
+	out[0] = 1;
+	out[1] = 0;
+	out[2] = 0;
+	out[3] = 1;
+	out[4] = 0;
+	out[5] = 0;
+	return out;
 }
 
 /**
@@ -72,14 +72,14 @@ export function identity(out: Mat2d): Mat2d {
  * @returns A new mat2d
  */
 export function fromValues(a: number, b: number, c: number, d: number, tx: number, ty: number): Mat2d {
-    const out = create();
-    out[0] = a;
-    out[1] = b;
-    out[2] = c;
-    out[3] = d;
-    out[4] = tx;
-    out[5] = ty;
-    return out;
+	const out = create();
+	out[0] = a;
+	out[1] = b;
+	out[2] = c;
+	out[3] = d;
+	out[4] = tx;
+	out[5] = ty;
+	return out;
 }
 
 /**
@@ -95,13 +95,13 @@ export function fromValues(a: number, b: number, c: number, d: number, tx: numbe
  * @returns out
  */
 export function set(out: Mat2d, a: number, b: number, c: number, d: number, tx: number, ty: number): Mat2d {
-    out[0] = a;
-    out[1] = b;
-    out[2] = c;
-    out[3] = d;
-    out[4] = tx;
-    out[5] = ty;
-    return out;
+	out[0] = a;
+	out[1] = b;
+	out[2] = c;
+	out[3] = d;
+	out[4] = tx;
+	out[5] = ty;
+	return out;
 }
 
 /**
@@ -109,29 +109,29 @@ export function set(out: Mat2d, a: number, b: number, c: number, d: number, tx: 
  *
  * @param out the receiving matrix
  * @param a the source matrix
- * @returns out, or null if source matrix is not invertible
+ * @returns out, or undefined if source matrix is not invertible
  */
-export function invert(out: Mat2d, a: Mat2d): Mat2d | null {
-    const aa = a[0];
-    const ab = a[1];
-    const ac = a[2];
-    const ad = a[3];
-    const atx = a[4];
-    const aty = a[5];
+export function invert(out: Mat2d, a: Mat2d): Mat2d | undefined {
+	const aa = a[0];
+	const ab = a[1];
+	const ac = a[2];
+	const ad = a[3];
+	const atx = a[4];
+	const aty = a[5];
 
-    let det = aa * ad - ab * ac;
-    if (!det) {
-        return null;
-    }
-    det = 1.0 / det;
+	let det = aa * ad - ab * ac;
+	if (!det) {
+		return undefined;
+	}
+	det = 1.0 / det;
 
-    out[0] = ad * det;
-    out[1] = -ab * det;
-    out[2] = -ac * det;
-    out[3] = aa * det;
-    out[4] = (ac * aty - ad * atx) * det;
-    out[5] = (ab * atx - aa * aty) * det;
-    return out;
+	out[0] = ad * det;
+	out[1] = -ab * det;
+	out[2] = -ac * det;
+	out[3] = aa * det;
+	out[4] = (ac * aty - ad * atx) * det;
+	out[5] = (ab * atx - aa * aty) * det;
+	return out;
 }
 
 /**
@@ -141,7 +141,7 @@ export function invert(out: Mat2d, a: Mat2d): Mat2d | null {
  * @returns determinant of a
  */
 export function determinant(a: Mat2d): number {
-    return a[0] * a[3] - a[1] * a[2];
+	return a[0] * a[3] - a[1] * a[2];
 }
 
 /**
@@ -153,25 +153,25 @@ export function determinant(a: Mat2d): number {
  * @returns out
  */
 export function multiply(out: Mat2d, a: Mat2d, b: Mat2d): Mat2d {
-    const a0 = a[0];
-    const a1 = a[1];
-    const a2 = a[2];
-    const a3 = a[3];
-    const a4 = a[4];
-    const a5 = a[5];
-    const b0 = b[0];
-    const b1 = b[1];
-    const b2 = b[2];
-    const b3 = b[3];
-    const b4 = b[4];
-    const b5 = b[5];
-    out[0] = a0 * b0 + a2 * b1;
-    out[1] = a1 * b0 + a3 * b1;
-    out[2] = a0 * b2 + a2 * b3;
-    out[3] = a1 * b2 + a3 * b3;
-    out[4] = a0 * b4 + a2 * b5 + a4;
-    out[5] = a1 * b4 + a3 * b5 + a5;
-    return out;
+	const a0 = a[0];
+	const a1 = a[1];
+	const a2 = a[2];
+	const a3 = a[3];
+	const a4 = a[4];
+	const a5 = a[5];
+	const b0 = b[0];
+	const b1 = b[1];
+	const b2 = b[2];
+	const b3 = b[3];
+	const b4 = b[4];
+	const b5 = b[5];
+	out[0] = a0 * b0 + a2 * b1;
+	out[1] = a1 * b0 + a3 * b1;
+	out[2] = a0 * b2 + a2 * b3;
+	out[3] = a1 * b2 + a3 * b3;
+	out[4] = a0 * b4 + a2 * b5 + a4;
+	out[5] = a1 * b4 + a3 * b5 + a5;
+	return out;
 }
 
 /**
@@ -183,21 +183,21 @@ export function multiply(out: Mat2d, a: Mat2d, b: Mat2d): Mat2d {
  * @returns out
  */
 export function rotate(out: Mat2d, a: Mat2d, rad: number): Mat2d {
-    const a0 = a[0];
-    const a1 = a[1];
-    const a2 = a[2];
-    const a3 = a[3];
-    const a4 = a[4];
-    const a5 = a[5];
-    const s = Math.sin(rad);
-    const c = Math.cos(rad);
-    out[0] = a0 * c + a2 * s;
-    out[1] = a1 * c + a3 * s;
-    out[2] = a0 * -s + a2 * c;
-    out[3] = a1 * -s + a3 * c;
-    out[4] = a4;
-    out[5] = a5;
-    return out;
+	const a0 = a[0];
+	const a1 = a[1];
+	const a2 = a[2];
+	const a3 = a[3];
+	const a4 = a[4];
+	const a5 = a[5];
+	const s = math.sin(rad);
+	const c = math.cos(rad);
+	out[0] = a0 * c + a2 * s;
+	out[1] = a1 * c + a3 * s;
+	out[2] = a0 * -s + a2 * c;
+	out[3] = a1 * -s + a3 * c;
+	out[4] = a4;
+	out[5] = a5;
+	return out;
 }
 
 /**
@@ -209,21 +209,21 @@ export function rotate(out: Mat2d, a: Mat2d, rad: number): Mat2d {
  * @returns out
  **/
 export function scale(out: Mat2d, a: Mat2d, v: Vec2): Mat2d {
-    const a0 = a[0];
-    const a1 = a[1];
-    const a2 = a[2];
-    const a3 = a[3];
-    const a4 = a[4];
-    const a5 = a[5];
-    const v0 = v[0];
-    const v1 = v[1];
-    out[0] = a0 * v0;
-    out[1] = a1 * v0;
-    out[2] = a2 * v1;
-    out[3] = a3 * v1;
-    out[4] = a4;
-    out[5] = a5;
-    return out;
+	const a0 = a[0];
+	const a1 = a[1];
+	const a2 = a[2];
+	const a3 = a[3];
+	const a4 = a[4];
+	const a5 = a[5];
+	const v0 = v[0];
+	const v1 = v[1];
+	out[0] = a0 * v0;
+	out[1] = a1 * v0;
+	out[2] = a2 * v1;
+	out[3] = a3 * v1;
+	out[4] = a4;
+	out[5] = a5;
+	return out;
 }
 
 /**
@@ -235,21 +235,21 @@ export function scale(out: Mat2d, a: Mat2d, v: Vec2): Mat2d {
  * @returns out
  **/
 export function translate(out: Mat2d, a: Mat2d, v: Vec2): Mat2d {
-    const a0 = a[0];
-    const a1 = a[1];
-    const a2 = a[2];
-    const a3 = a[3];
-    const a4 = a[4];
-    const a5 = a[5];
-    const v0 = v[0];
-    const v1 = v[1];
-    out[0] = a0;
-    out[1] = a1;
-    out[2] = a2;
-    out[3] = a3;
-    out[4] = a0 * v0 + a2 * v1 + a4;
-    out[5] = a1 * v0 + a3 * v1 + a5;
-    return out;
+	const a0 = a[0];
+	const a1 = a[1];
+	const a2 = a[2];
+	const a3 = a[3];
+	const a4 = a[4];
+	const a5 = a[5];
+	const v0 = v[0];
+	const v1 = v[1];
+	out[0] = a0;
+	out[1] = a1;
+	out[2] = a2;
+	out[3] = a3;
+	out[4] = a0 * v0 + a2 * v1 + a4;
+	out[5] = a1 * v0 + a3 * v1 + a5;
+	return out;
 }
 
 /**
@@ -264,15 +264,15 @@ export function translate(out: Mat2d, a: Mat2d, v: Vec2): Mat2d {
  * @returns out
  */
 export function fromRotation(out: Mat2d, rad: number): Mat2d {
-    const s = Math.sin(rad);
-    const c = Math.cos(rad);
-    out[0] = c;
-    out[1] = s;
-    out[2] = -s;
-    out[3] = c;
-    out[4] = 0;
-    out[5] = 0;
-    return out;
+	const s = math.sin(rad);
+	const c = math.cos(rad);
+	out[0] = c;
+	out[1] = s;
+	out[2] = -s;
+	out[3] = c;
+	out[4] = 0;
+	out[5] = 0;
+	return out;
 }
 
 /**
@@ -287,13 +287,13 @@ export function fromRotation(out: Mat2d, rad: number): Mat2d {
  * @returns out
  */
 export function fromScaling(out: Mat2d, v: Vec2): Mat2d {
-    out[0] = v[0];
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = v[1];
-    out[4] = 0;
-    out[5] = 0;
-    return out;
+	out[0] = v[0];
+	out[1] = 0;
+	out[2] = 0;
+	out[3] = v[1];
+	out[4] = 0;
+	out[5] = 0;
+	return out;
 }
 
 /**
@@ -308,13 +308,13 @@ export function fromScaling(out: Mat2d, v: Vec2): Mat2d {
  * @returns out
  */
 export function fromTranslation(out: Mat2d, v: Vec2): Mat2d {
-    out[0] = 1;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 1;
-    out[4] = v[0];
-    out[5] = v[1];
-    return out;
+	out[0] = 1;
+	out[1] = 0;
+	out[2] = 0;
+	out[3] = 1;
+	out[4] = v[0];
+	out[5] = v[1];
+	return out;
 }
 
 /**
@@ -324,7 +324,7 @@ export function fromTranslation(out: Mat2d, v: Vec2): Mat2d {
  * @returns string representation of the matrix
  */
 export function str(a: Mat2d): string {
-    return `mat2d(${a[0]}, ${a[1]}, ${a[2]}, ${a[3]}, ${a[4]}, ${a[5]})`;
+	return `mat2d(${a[0]}, ${a[1]}, ${a[2]}, ${a[3]}, ${a[4]}, ${a[5]})`;
 }
 
 /**
@@ -334,7 +334,7 @@ export function str(a: Mat2d): string {
  * @returns Frobenius norm
  */
 export function frob(a: Mat2d): number {
-    return Math.sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3] + a[4] * a[4] + a[5] * a[5] + 1);
+	return math.sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3] + a[4] * a[4] + a[5] * a[5] + 1);
 }
 
 /**
@@ -346,13 +346,13 @@ export function frob(a: Mat2d): number {
  * @returns out
  */
 export function add(out: Mat2d, a: Mat2d, b: Mat2d): Mat2d {
-    out[0] = a[0] + b[0];
-    out[1] = a[1] + b[1];
-    out[2] = a[2] + b[2];
-    out[3] = a[3] + b[3];
-    out[4] = a[4] + b[4];
-    out[5] = a[5] + b[5];
-    return out;
+	out[0] = a[0] + b[0];
+	out[1] = a[1] + b[1];
+	out[2] = a[2] + b[2];
+	out[3] = a[3] + b[3];
+	out[4] = a[4] + b[4];
+	out[5] = a[5] + b[5];
+	return out;
 }
 
 /**
@@ -364,13 +364,13 @@ export function add(out: Mat2d, a: Mat2d, b: Mat2d): Mat2d {
  * @returns out
  */
 export function subtract(out: Mat2d, a: Mat2d, b: Mat2d): Mat2d {
-    out[0] = a[0] - b[0];
-    out[1] = a[1] - b[1];
-    out[2] = a[2] - b[2];
-    out[3] = a[3] - b[3];
-    out[4] = a[4] - b[4];
-    out[5] = a[5] - b[5];
-    return out;
+	out[0] = a[0] - b[0];
+	out[1] = a[1] - b[1];
+	out[2] = a[2] - b[2];
+	out[3] = a[3] - b[3];
+	out[4] = a[4] - b[4];
+	out[5] = a[5] - b[5];
+	return out;
 }
 
 /**
@@ -382,13 +382,13 @@ export function subtract(out: Mat2d, a: Mat2d, b: Mat2d): Mat2d {
  * @returns out
  */
 export function multiplyScalar(out: Mat2d, a: Mat2d, b: number): Mat2d {
-    out[0] = a[0] * b;
-    out[1] = a[1] * b;
-    out[2] = a[2] * b;
-    out[3] = a[3] * b;
-    out[4] = a[4] * b;
-    out[5] = a[5] * b;
-    return out;
+	out[0] = a[0] * b;
+	out[1] = a[1] * b;
+	out[2] = a[2] * b;
+	out[3] = a[3] * b;
+	out[4] = a[4] * b;
+	out[5] = a[5] * b;
+	return out;
 }
 
 /**
@@ -401,13 +401,13 @@ export function multiplyScalar(out: Mat2d, a: Mat2d, b: number): Mat2d {
  * @returns out
  */
 export function multiplyScalarAndAdd(out: Mat2d, a: Mat2d, b: Mat2d, scale: number): Mat2d {
-    out[0] = a[0] + b[0] * scale;
-    out[1] = a[1] + b[1] * scale;
-    out[2] = a[2] + b[2] * scale;
-    out[3] = a[3] + b[3] * scale;
-    out[4] = a[4] + b[4] * scale;
-    out[5] = a[5] + b[5] * scale;
-    return out;
+	out[0] = a[0] + b[0] * scale;
+	out[1] = a[1] + b[1] * scale;
+	out[2] = a[2] + b[2] * scale;
+	out[3] = a[3] + b[3] * scale;
+	out[4] = a[4] + b[4] * scale;
+	out[5] = a[5] + b[5] * scale;
+	return out;
 }
 
 /**
@@ -418,7 +418,7 @@ export function multiplyScalarAndAdd(out: Mat2d, a: Mat2d, b: Mat2d, scale: numb
  * @returns True if the matrices are equal, false otherwise.
  */
 export function exactEquals(a: Mat2d, b: Mat2d): boolean {
-    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && a[4] === b[4] && a[5] === b[5];
+	return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && a[4] === b[4] && a[5] === b[5];
 }
 
 /**
@@ -429,26 +429,26 @@ export function exactEquals(a: Mat2d, b: Mat2d): boolean {
  * @returns True if the matrices are equal, false otherwise.
  */
 export function equals(a: Mat2d, b: Mat2d): boolean {
-    const a0 = a[0];
-    const a1 = a[1];
-    const a2 = a[2];
-    const a3 = a[3];
-    const a4 = a[4];
-    const a5 = a[5];
-    const b0 = b[0];
-    const b1 = b[1];
-    const b2 = b[2];
-    const b3 = b[3];
-    const b4 = b[4];
-    const b5 = b[5];
-    return (
-        Math.abs(a0 - b0) <= common.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
-        Math.abs(a1 - b1) <= common.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
-        Math.abs(a2 - b2) <= common.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
-        Math.abs(a3 - b3) <= common.EPSILON * Math.max(1.0, Math.abs(a3), Math.abs(b3)) &&
-        Math.abs(a4 - b4) <= common.EPSILON * Math.max(1.0, Math.abs(a4), Math.abs(b4)) &&
-        Math.abs(a5 - b5) <= common.EPSILON * Math.max(1.0, Math.abs(a5), Math.abs(b5))
-    );
+	const a0 = a[0];
+	const a1 = a[1];
+	const a2 = a[2];
+	const a3 = a[3];
+	const a4 = a[4];
+	const a5 = a[5];
+	const b0 = b[0];
+	const b1 = b[1];
+	const b2 = b[2];
+	const b3 = b[3];
+	const b4 = b[4];
+	const b5 = b[5];
+	return (
+		math.abs(a0 - b0) <= common.EPSILON * math.max(1.0, math.abs(a0), math.abs(b0)) &&
+		math.abs(a1 - b1) <= common.EPSILON * math.max(1.0, math.abs(a1), math.abs(b1)) &&
+		math.abs(a2 - b2) <= common.EPSILON * math.max(1.0, math.abs(a2), math.abs(b2)) &&
+		math.abs(a3 - b3) <= common.EPSILON * math.max(1.0, math.abs(a3), math.abs(b3)) &&
+		math.abs(a4 - b4) <= common.EPSILON * math.max(1.0, math.abs(a4), math.abs(b4)) &&
+		math.abs(a5 - b5) <= common.EPSILON * math.max(1.0, math.abs(a5), math.abs(b5))
+	);
 }
 
 /**

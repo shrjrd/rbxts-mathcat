@@ -1,2 +1,8 @@
-node_modules
-dist
+node_modules/
+out/
+include/
+sourcemap.json
+*.tsbuildinfo
+*.rbxl*
+*.rbxlx*
+*.tgz

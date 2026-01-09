@@ -1,5 +1,5 @@
-import * as common from './common';
-import type { Mat2, Vec2 } from './types';
+import * as common from "./common";
+import type { Mat2, Vec2 } from "./types";
 
 /**
  * Creates a new identity mat2
@@ -7,7 +7,7 @@ import type { Mat2, Vec2 } from './types';
  * @returns a new 2x2 matrix
  */
 export function create(): Mat2 {
-    return [1, 0, 0, 1];
+	return [1, 0, 0, 1];
 }
 
 /**
@@ -17,12 +17,12 @@ export function create(): Mat2 {
  * @returns a new 2x2 matrix
  */
 export function clone(a: Mat2): Mat2 {
-    const out = create();
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    return out;
+	const out = create();
+	out[0] = a[0];
+	out[1] = a[1];
+	out[2] = a[2];
+	out[3] = a[3];
+	return out;
 }
 
 /**
@@ -33,11 +33,11 @@ export function clone(a: Mat2): Mat2 {
  * @returns out
  */
 export function copy(out: Mat2, a: Mat2): Mat2 {
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    return out;
+	out[0] = a[0];
+	out[1] = a[1];
+	out[2] = a[2];
+	out[3] = a[3];
+	return out;
 }
 
 /**
@@ -47,11 +47,11 @@ export function copy(out: Mat2, a: Mat2): Mat2 {
  * @returns out
  */
 export function identity(out: Mat2): Mat2 {
-    out[0] = 1;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 1;
-    return out;
+	out[0] = 1;
+	out[1] = 0;
+	out[2] = 0;
+	out[3] = 1;
+	return out;
 }
 
 /**
@@ -64,12 +64,12 @@ export function identity(out: Mat2): Mat2 {
  * @returns out A new 2x2 matrix
  */
 export function fromValues(m00: number, m01: number, m10: number, m11: number): Mat2 {
-    const out = create();
-    out[0] = m00;
-    out[1] = m01;
-    out[2] = m10;
-    out[3] = m11;
-    return out;
+	const out = create();
+	out[0] = m00;
+	out[1] = m01;
+	out[2] = m10;
+	out[3] = m11;
+	return out;
 }
 
 /**
@@ -83,11 +83,11 @@ export function fromValues(m00: number, m01: number, m10: number, m11: number): 
  * @returns out
  */
 export function set(out: Mat2, m00: number, m01: number, m10: number, m11: number): Mat2 {
-    out[0] = m00;
-    out[1] = m01;
-    out[2] = m10;
-    out[3] = m11;
-    return out;
+	out[0] = m00;
+	out[1] = m01;
+	out[2] = m10;
+	out[3] = m11;
+	return out;
 }
 
 /**
@@ -98,20 +98,20 @@ export function set(out: Mat2, m00: number, m01: number, m10: number, m11: numbe
  * @returns out
  */
 export function transpose(out: Mat2, a: Mat2): Mat2 {
-    // If we are transposing ourselves we can skip a few steps but have to cache
-    // some values
-    if (out === a) {
-        const a1 = a[1];
-        out[1] = a[2];
-        out[2] = a1;
-    } else {
-        out[0] = a[0];
-        out[1] = a[2];
-        out[2] = a[1];
-        out[3] = a[3];
-    }
+	// If we are transposing ourselves we can skip a few steps but have to cache
+	// some values
+	if (out === a) {
+		const a1 = a[1];
+		out[1] = a[2];
+		out[2] = a1;
+	} else {
+		out[0] = a[0];
+		out[1] = a[2];
+		out[2] = a[1];
+		out[3] = a[3];
+	}
 
-    return out;
+	return out;
 }
 
 /**
@@ -119,28 +119,28 @@ export function transpose(out: Mat2, a: Mat2): Mat2 {
  *
  * @param out the receiving matrix
  * @param a the source matrix
- * @returns out, or null if source matrix is not invertible
+ * @returns out, or undefined if source matrix is not invertible
  */
-export function invert(out: Mat2, a: Mat2): Mat2 | null {
-    const a0 = a[0];
-    const a1 = a[1];
-    const a2 = a[2];
-    const a3 = a[3];
+export function invert(out: Mat2, a: Mat2): Mat2 | undefined {
+	const a0 = a[0];
+	const a1 = a[1];
+	const a2 = a[2];
+	const a3 = a[3];
 
-    // Calculate the determinant
-    let det = a0 * a3 - a2 * a1;
+	// Calculate the determinant
+	let det = a0 * a3 - a2 * a1;
 
-    if (!det) {
-        return null;
-    }
-    det = 1.0 / det;
+	if (!det) {
+		return undefined;
+	}
+	det = 1.0 / det;
 
-    out[0] = a3 * det;
-    out[1] = -a1 * det;
-    out[2] = -a2 * det;
-    out[3] = a0 * det;
+	out[0] = a3 * det;
+	out[1] = -a1 * det;
+	out[2] = -a2 * det;
+	out[3] = a0 * det;
 
-    return out;
+	return out;
 }
 
 /**
@@ -151,14 +151,14 @@ export function invert(out: Mat2, a: Mat2): Mat2 | null {
  * @returns out
  */
 export function adjoint(out: Mat2, a: Mat2): Mat2 {
-    // Caching this value is necessary if out == a
-    const a0 = a[0];
-    out[0] = a[3];
-    out[1] = -a[1];
-    out[2] = -a[2];
-    out[3] = a0;
+	// Caching this value is necessary if out == a
+	const a0 = a[0];
+	out[0] = a[3];
+	out[1] = -a[1];
+	out[2] = -a[2];
+	out[3] = a0;
 
-    return out;
+	return out;
 }
 
 /**
@@ -168,7 +168,7 @@ export function adjoint(out: Mat2, a: Mat2): Mat2 {
  * @returns determinant of a
  */
 export function determinant(a: Mat2): number {
-    return a[0] * a[3] - a[2] * a[1];
+	return a[0] * a[3] - a[2] * a[1];
 }
 
 /**
@@ -180,19 +180,19 @@ export function determinant(a: Mat2): number {
  * @returns out
  */
 export function multiply(out: Mat2, a: Mat2, b: Mat2): Mat2 {
-    const a0 = a[0];
-    const a1 = a[1];
-    const a2 = a[2];
-    const a3 = a[3];
-    const b0 = b[0];
-    const b1 = b[1];
-    const b2 = b[2];
-    const b3 = b[3];
-    out[0] = a0 * b0 + a2 * b1;
-    out[1] = a1 * b0 + a3 * b1;
-    out[2] = a0 * b2 + a2 * b3;
-    out[3] = a1 * b2 + a3 * b3;
-    return out;
+	const a0 = a[0];
+	const a1 = a[1];
+	const a2 = a[2];
+	const a3 = a[3];
+	const b0 = b[0];
+	const b1 = b[1];
+	const b2 = b[2];
+	const b3 = b[3];
+	out[0] = a0 * b0 + a2 * b1;
+	out[1] = a1 * b0 + a3 * b1;
+	out[2] = a0 * b2 + a2 * b3;
+	out[3] = a1 * b2 + a3 * b3;
+	return out;
 }
 
 /**
@@ -204,17 +204,17 @@ export function multiply(out: Mat2, a: Mat2, b: Mat2): Mat2 {
  * @returns out
  */
 export function rotate(out: Mat2, a: Mat2, rad: number): Mat2 {
-    const a0 = a[0];
-    const a1 = a[1];
-    const a2 = a[2];
-    const a3 = a[3];
-    const s = Math.sin(rad);
-    const c = Math.cos(rad);
-    out[0] = a0 * c + a2 * s;
-    out[1] = a1 * c + a3 * s;
-    out[2] = a0 * -s + a2 * c;
-    out[3] = a1 * -s + a3 * c;
-    return out;
+	const a0 = a[0];
+	const a1 = a[1];
+	const a2 = a[2];
+	const a3 = a[3];
+	const s = math.sin(rad);
+	const c = math.cos(rad);
+	out[0] = a0 * c + a2 * s;
+	out[1] = a1 * c + a3 * s;
+	out[2] = a0 * -s + a2 * c;
+	out[3] = a1 * -s + a3 * c;
+	return out;
 }
 
 /**
@@ -226,17 +226,17 @@ export function rotate(out: Mat2, a: Mat2, rad: number): Mat2 {
  * @returns out
  **/
 export function scale(out: Mat2, a: Mat2, v: Vec2): Mat2 {
-    const a0 = a[0];
-    const a1 = a[1];
-    const a2 = a[2];
-    const a3 = a[3];
-    const v0 = v[0];
-    const v1 = v[1];
-    out[0] = a0 * v0;
-    out[1] = a1 * v0;
-    out[2] = a2 * v1;
-    out[3] = a3 * v1;
-    return out;
+	const a0 = a[0];
+	const a1 = a[1];
+	const a2 = a[2];
+	const a3 = a[3];
+	const v0 = v[0];
+	const v1 = v[1];
+	out[0] = a0 * v0;
+	out[1] = a1 * v0;
+	out[2] = a2 * v1;
+	out[3] = a3 * v1;
+	return out;
 }
 
 /**
@@ -251,13 +251,13 @@ export function scale(out: Mat2, a: Mat2, v: Vec2): Mat2 {
  * @returns out
  */
 export function fromRotation(out: Mat2, rad: number): Mat2 {
-    const s = Math.sin(rad);
-    const c = Math.cos(rad);
-    out[0] = c;
-    out[1] = s;
-    out[2] = -s;
-    out[3] = c;
-    return out;
+	const s = math.sin(rad);
+	const c = math.cos(rad);
+	out[0] = c;
+	out[1] = s;
+	out[2] = -s;
+	out[3] = c;
+	return out;
 }
 
 /**
@@ -272,11 +272,11 @@ export function fromRotation(out: Mat2, rad: number): Mat2 {
  * @returns out
  */
 export function fromScaling(out: Mat2, v: Vec2): Mat2 {
-    out[0] = v[0];
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = v[1];
-    return out;
+	out[0] = v[0];
+	out[1] = 0;
+	out[2] = 0;
+	out[3] = v[1];
+	return out;
 }
 
 /**
@@ -286,7 +286,7 @@ export function fromScaling(out: Mat2, v: Vec2): Mat2 {
  * @returns string representation of the matrix
  */
 export function str(a: Mat2): string {
-    return `mat2(${a[0]}, ${a[1]}, ${a[2]}, ${a[3]})`;
+	return `mat2(${a[0]}, ${a[1]}, ${a[2]}, ${a[3]})`;
 }
 
 /**
@@ -296,7 +296,7 @@ export function str(a: Mat2): string {
  * @returns Frobenius norm
  */
 export function frob(a: Mat2): number {
-    return Math.sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3]);
+	return math.sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3]);
 }
 
 /**
@@ -308,11 +308,11 @@ export function frob(a: Mat2): number {
  */
 
 export function LDU(L: Mat2, D: Mat2, U: Mat2, a: Mat2): [Mat2, Mat2, Mat2] {
-    L[2] = a[2] / a[0];
-    U[0] = a[0];
-    U[1] = a[1];
-    U[3] = a[3] - L[2] * U[1];
-    return [L, D, U];
+	L[2] = a[2] / a[0];
+	U[0] = a[0];
+	U[1] = a[1];
+	U[3] = a[3] - L[2] * U[1];
+	return [L, D, U];
 }
 
 /**
@@ -324,11 +324,11 @@ export function LDU(L: Mat2, D: Mat2, U: Mat2, a: Mat2): [Mat2, Mat2, Mat2] {
  * @returns out
  */
 export function add(out: Mat2, a: Mat2, b: Mat2): Mat2 {
-    out[0] = a[0] + b[0];
-    out[1] = a[1] + b[1];
-    out[2] = a[2] + b[2];
-    out[3] = a[3] + b[3];
-    return out;
+	out[0] = a[0] + b[0];
+	out[1] = a[1] + b[1];
+	out[2] = a[2] + b[2];
+	out[3] = a[3] + b[3];
+	return out;
 }
 
 /**
@@ -340,11 +340,11 @@ export function add(out: Mat2, a: Mat2, b: Mat2): Mat2 {
  * @returns out
  */
 export function subtract(out: Mat2, a: Mat2, b: Mat2): Mat2 {
-    out[0] = a[0] - b[0];
-    out[1] = a[1] - b[1];
-    out[2] = a[2] - b[2];
-    out[3] = a[3] - b[3];
-    return out;
+	out[0] = a[0] - b[0];
+	out[1] = a[1] - b[1];
+	out[2] = a[2] - b[2];
+	out[3] = a[3] - b[3];
+	return out;
 }
 
 /**
@@ -355,7 +355,7 @@ export function subtract(out: Mat2, a: Mat2, b: Mat2): Mat2 {
  * @returns True if the matrices are equal, false otherwise.
  */
 export function exactEquals(a: Mat2, b: Mat2): boolean {
-    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3];
+	return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3];
 }
 
 /**
@@ -366,20 +366,20 @@ export function exactEquals(a: Mat2, b: Mat2): boolean {
  * @returns True if the matrices are equal, false otherwise.
  */
 export function equals(a: Mat2, b: Mat2): boolean {
-    const a0 = a[0];
-    const a1 = a[1];
-    const a2 = a[2];
-    const a3 = a[3];
-    const b0 = b[0];
-    const b1 = b[1];
-    const b2 = b[2];
-    const b3 = b[3];
-    return (
-        Math.abs(a0 - b0) <= common.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
-        Math.abs(a1 - b1) <= common.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
-        Math.abs(a2 - b2) <= common.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
-        Math.abs(a3 - b3) <= common.EPSILON * Math.max(1.0, Math.abs(a3), Math.abs(b3))
-    );
+	const a0 = a[0];
+	const a1 = a[1];
+	const a2 = a[2];
+	const a3 = a[3];
+	const b0 = b[0];
+	const b1 = b[1];
+	const b2 = b[2];
+	const b3 = b[3];
+	return (
+		math.abs(a0 - b0) <= common.EPSILON * math.max(1.0, math.abs(a0), math.abs(b0)) &&
+		math.abs(a1 - b1) <= common.EPSILON * math.max(1.0, math.abs(a1), math.abs(b1)) &&
+		math.abs(a2 - b2) <= common.EPSILON * math.max(1.0, math.abs(a2), math.abs(b2)) &&
+		math.abs(a3 - b3) <= common.EPSILON * math.max(1.0, math.abs(a3), math.abs(b3))
+	);
 }
 
 /**
@@ -391,11 +391,11 @@ export function equals(a: Mat2, b: Mat2): boolean {
  * @returns out
  */
 export function multiplyScalar(out: Mat2, a: Mat2, b: number): Mat2 {
-    out[0] = a[0] * b;
-    out[1] = a[1] * b;
-    out[2] = a[2] * b;
-    out[3] = a[3] * b;
-    return out;
+	out[0] = a[0] * b;
+	out[1] = a[1] * b;
+	out[2] = a[2] * b;
+	out[3] = a[3] * b;
+	return out;
 }
 
 /**
@@ -408,11 +408,11 @@ export function multiplyScalar(out: Mat2, a: Mat2, b: number): Mat2 {
  * @returns out
  */
 export function multiplyScalarAndAdd(out: Mat2, a: Mat2, b: Mat2, scale: number): Mat2 {
-    out[0] = a[0] + b[0] * scale;
-    out[1] = a[1] + b[1] * scale;
-    out[2] = a[2] + b[2] * scale;
-    out[3] = a[3] + b[3] * scale;
-    return out;
+	out[0] = a[0] + b[0] * scale;
+	out[1] = a[1] + b[1] * scale;
+	out[2] = a[2] + b[2] * scale;
+	out[3] = a[3] + b[3] * scale;
+	return out;
 }
 
 /**
