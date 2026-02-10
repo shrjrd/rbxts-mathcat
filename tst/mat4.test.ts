@@ -85,7 +85,7 @@ describe("mat4", () => {
 			expect(result).toEqual([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
 		});
 
-		it("should return null for non-invertible matrix", () => {
+		it("should return undefined for non-invertible matrix", () => {
 			const m: Mat4 = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]; // Zero row
 			const result = mat4.create();
 
@@ -204,7 +204,7 @@ describe("mat4", () => {
 			expect(result[5]).toBeCloseTo(0, 5);
 		});
 
-		it("should return null for zero-length axis", () => {
+		it("should return undefined for zero-length axis", () => {
 			const m = mat4.identity(mat4.create());
 			const result = mat4.create();
 			const axis: Vec3 = [0, 0, 0];

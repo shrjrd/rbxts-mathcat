@@ -397,7 +397,7 @@ describe("vec2", () => {
 			expect(vec2.finite([1, math.huge])).toBe(false);
 		});
 
-		it("should return false for vectors with NaN", () => {
+		it("should return false for vectors with Number.NaN", () => {
 			expect(vec2.finite([Number.NaN, 2])).toBe(false);
 		});
 	});

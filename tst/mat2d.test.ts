@@ -73,7 +73,7 @@ describe("mat2d", () => {
 			expect(result[5]).toBeCloseTo(-3);
 		});
 
-		it("should return null for non-invertible matrix", () => {
+		it("should return undefined for non-invertible matrix", () => {
 			const m: Mat2d = [1, 2, 2, 4, 0, 0]; // Determinant = 0
 			const result = mat2d.create();
 

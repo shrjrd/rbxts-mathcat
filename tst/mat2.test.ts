@@ -88,7 +88,7 @@ describe("mat2", () => {
 			expect(result[3]).toBeCloseTo(1);
 		});
 
-		it("should return null for non-invertible matrix", () => {
+		it("should return undefined for non-invertible matrix", () => {
 			const m: Mat2 = [1, 2, 2, 4]; // Determinant = 0
 			const result = mat2.create();
 

@@ -100,7 +100,7 @@ describe("mat3", () => {
 			expect(result[7]).toBeCloseTo(-3);
 		});
 
-		it("should return null for non-invertible matrix", () => {
+		it("should return undefined for non-invertible matrix", () => {
 			const m: Mat3 = [1, 2, 3, 2, 4, 6, 3, 6, 9]; // Singular matrix
 			const result = mat3.create();
 
@@ -293,7 +293,7 @@ describe("mat3", () => {
 			expect(result[8]).toBeCloseTo(0.5);
 		});
 
-		it("should return null for non-invertible matrix", () => {
+		it("should return undefined for non-invertible matrix", () => {
 			const m4: Mat4 = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 			const result = mat3.create();
 

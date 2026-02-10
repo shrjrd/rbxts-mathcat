@@ -97,7 +97,7 @@ describe("euler", () => {
 			euler.fromRotationMat4(result, matrix, "xyz");
 
 			expect(result[1]).toBeCloseTo(math.pi / 2);
-			// X and Z should be reasonable values (not NaN or Infinity)
+			// X and Z should be reasonable values (not Number.NaN or math.huge)
 			expect(Number.isFinite(result[0])).toBe(true);
 			expect(Number.isFinite(result[2])).toBe(true);
 		});
