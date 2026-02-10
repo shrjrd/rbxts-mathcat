@@ -1,6 +1,6 @@
 {
 	"name": "@rbxts/mathcat",
-	"version": "0.0.6",
+	"version": "0.0.9",
 	"author": "Isaac Mason <isaac@isaacmason.com>",
 	"description": "a collection of math helpers for 3D graphics and simulations",
 	"keywords": [
@@ -26,6 +26,7 @@
 		"url": "git+https://github.com/shrjrd/rbxts-mathcat.git"
 	},
 	"scripts": {
+		"prepack": "npm run build",
 		"build": "rbxtsc",
 		"compile:rbxl": "rbxtsc --type game --rojo default.project.json",
 		"build:rbxl": "rojo sourcemap -o sourcemap.json && rojo build -o project.rbxl",
