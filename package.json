@@ -26,11 +26,10 @@
 		"url": "git+https://github.com/shrjrd/rbxts-mathcat.git"
 	},
 	"scripts": {
-		"prepack": "npm run build",
-		"build": "rbxtsc",
-		"compile:rbxl": "rbxtsc --type game --rojo default.project.json",
-		"build:rbxl": "rojo sourcemap -o sourcemap.json && rojo build -o project.rbxl",
-		"watch:rbxl": "npx concurrently \"npm run compile:rbxl -- -w\" \"rojo serve\""
+		"prepack": "rbxtsc",
+		"compile": "rbxtsc --type game --rojo default.project.json",
+		"build": "rojo sourcemap -o sourcemap.json && rojo build -o project.rbxl",
+		"watch": "npx concurrently \"npm run compile:rbxl -- -w\" \"rojo serve\""
 	},
 	"publishConfig": {
 		"access": "public"
