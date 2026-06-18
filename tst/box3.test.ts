@@ -1,6 +1,7 @@
 import * as Number from "./Number";
 
 import { describe, expect, it } from "@rbxts/jest-globals";
+
 import type { Box3, Mat4, Plane3, Sphere, Vec3 } from "../src";
 import { box3 } from "../src";
 
@@ -1112,13 +1113,58 @@ describe("box3", () => {
 				[1, 1, 1],
 			];
 
+			// tolerate ULP-scale drift: Arvo-style bounds derive from
+			// sums-of-products that can differ by an ULP from the per-corner
+			// formula, which can put boundary corners marginally outside.
+			const eps = 1e-12;
 			for (const corner of corners) {
 				const x = corner[0],
 					y = corner[1],
 					z = corner[2];
 				const transformed: Vec3 = [cos45 * x - sin45 * y, sin45 * x + cos45 * y, z];
-				expect(box3.containsPoint(out, transformed)).toBe(true);
+				expect(transformed[0]).toBeGreaterThanOrEqual(out[0] - eps);
+				expect(transformed[0]).toBeLessThanOrEqual(out[3] + eps);
+				expect(transformed[1]).toBeGreaterThanOrEqual(out[1] - eps);
+				expect(transformed[1]).toBeLessThanOrEqual(out[4] + eps);
+				expect(transformed[2]).toBeGreaterThanOrEqual(out[2] - eps);
+				expect(transformed[2]).toBeLessThanOrEqual(out[5] + eps);
 			}
+		});
+
+		it("should produce the same result when out and box alias the same array", () => {
+			// regression: transformMat4 used to clobber `out` to the empty
+			// sentinel before reading `box`, which destroyed the input
+			// when callers passed the same array for both. Downstream that
+			// poisoned broadphase AABBs to NaN/Infinity.
+			const initial: Box3 = [1, 2, 3, 4, 6, 8];
+			// rotate 90deg around Z, then translate (10, -5, 2.5)
+			const transform: Mat4 = [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 10, -5, 2.5, 1];
+
+			const aliased: Box3 = [...initial] as Box3;
+			box3.transformMat4(aliased, aliased, transform);
+
+			const separateIn: Box3 = [...initial] as Box3;
+			const separateOut = box3.create();
+			box3.transformMat4(separateOut, separateIn, transform);
+
+			for (let i = 0; i < 6; i++) {
+				expect(aliased[i]).toBeCloseTo(separateOut[i]);
+			}
+		});
+
+		it("should preserve the empty-box sentinel when the input is empty", () => {
+			const empty = box3.create();
+			const transform: Mat4 = [2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 5, 3, 2, 1];
+
+			const out = box3.create();
+			box3.transformMat4(out, empty, transform);
+
+			expect(out[0]).toBe(Number.POSITIVE_INFINITY);
+			expect(out[1]).toBe(Number.POSITIVE_INFINITY);
+			expect(out[2]).toBe(Number.POSITIVE_INFINITY);
+			expect(out[3]).toBe(Number.NEGATIVE_INFINITY);
+			expect(out[4]).toBe(Number.NEGATIVE_INFINITY);
+			expect(out[5]).toBe(Number.NEGATIVE_INFINITY);
 		});
 	});
 
