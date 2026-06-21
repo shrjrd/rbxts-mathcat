@@ -5,4 +5,6 @@ sourcemap.json
 *.tsbuildinfo
 *.rbxl*
 *.rbxlx*
+*.rbxm*
+*.rbxmx*
 *.tgz

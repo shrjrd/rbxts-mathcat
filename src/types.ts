@@ -1,3 +1,5 @@
+//!native
+
 /** A 2D vector */
 export type Vec2 = [x: number, y: number];
 
@@ -17,36 +19,26 @@ export type Quat2 = [x: number, y: number, z: number, w: number, x2: number, y2:
 export type Mat2 = [e1: number, e2: number, e3: number, e4: number];
 
 /** A 3x3 matrix */
-export type Mat3 = [
-	e1: number,
-	e2: number,
-	e3: number,
-	e4: number,
-	e5: number,
-	e6: number,
-	e7: number,
-	e8: number,
-	e9: number,
-];
+export type Mat3 = [e1: number, e2: number, e3: number, e4: number, e5: number, e6: number, e7: number, e8: number, e9: number];
 
 /** A 4x4 matrix */
 export type Mat4 = [
-	e1: number,
-	e2: number,
-	e3: number,
-	e4: number,
-	e5: number,
-	e6: number,
-	e7: number,
-	e8: number,
-	e9: number,
-	e10: number,
-	e11: number,
-	e12: number,
-	e13: number,
-	e14: number,
-	e15: number,
-	e16: number,
+    e1: number,
+    e2: number,
+    e3: number,
+    e4: number,
+    e5: number,
+    e6: number,
+    e7: number,
+    e8: number,
+    e9: number,
+    e10: number,
+    e11: number,
+    e12: number,
+    e13: number,
+    e14: number,
+    e15: number,
+    e16: number,
 ];
 
 /** A 2D affine transform matrix */
@@ -59,7 +51,7 @@ export type Box3 = [minX: number, minY: number, minZ: number, maxX: number, maxY
 export type OBB3 = { center: Vec3; halfExtents: Vec3; rotation: Mat3 };
 
 /** Euler orders */
-export type EulerOrder = "xyz" | "xzy" | "yxz" | "yzx" | "zxy" | "zyx";
+export type EulerOrder = 'xyz' | 'xzy' | 'yxz' | 'yzx' | 'zxy' | 'zyx';
 
 /** A Euler in 3D space, with an optional order (default is 'xyz') */
 export type Euler = [x: number, y: number, z: number, order?: EulerOrder];
@@ -87,13 +79,13 @@ export type Circle = { center: Vec2; radius: number };
 
 /** A ray in 3D space */
 export type Ray3 = {
-	origin: Vec3;
-	direction: Vec3;
+    origin: Vec3;
+    direction: Vec3;
 };
 
 /** A raycast in 3D space */
 export type Raycast3 = {
-	origin: Vec3;
-	direction: Vec3;
-	length: number;
+    origin: Vec3;
+    direction: Vec3;
+    length: number;
 };

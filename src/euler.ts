@@ -1,13 +1,15 @@
-import { clamp, EPSILON } from "./common";
-import * as mat4 from "./mat4";
-import * as quat from "./quat";
-import type { Euler, EulerOrder, Mat4, Quat } from "./types";
+//!native
+
+import { clamp, EPSILON } from './common';
+import * as mat4 from './mat4';
+import * as quat from './quat';
+import type { Euler, EulerOrder, Mat4, Quat } from './types';
 
 /**
  * Creates a new Euler with default values (0, 0, 0, 'xyz').
  */
 export function create(): Euler {
-	return [0, 0, 0, "xyz"];
+    return [0, 0, 0, 'xyz'];
 }
 
 /**
@@ -19,7 +21,7 @@ export function create(): Euler {
  * @returns A new Euler.
  */
 export function fromValues(x: number, y: number, z: number, order: EulerOrder): Euler {
-	return [x, y, z, order];
+    return [x, y, z, order];
 }
 
 /**
@@ -31,11 +33,11 @@ export function fromValues(x: number, y: number, z: number, order: EulerOrder): 
  * @returns The output Euler.
  */
 export function set(out: Euler, x: number, y: number, z: number, order: EulerOrder): Euler {
-	out[0] = x;
-	out[1] = y;
-	out[2] = z;
-	out[3] = order;
-	return out;
+    out[0] = x;
+    out[1] = y;
+    out[2] = z;
+    out[3] = order;
+    return out;
 }
 
 /**
@@ -48,12 +50,12 @@ export function set(out: Euler, x: number, y: number, z: number, order: EulerOrd
  * @returns The output Euler.
  */
 export function fromDegrees(out: Euler, x: number, y: number, z: number, order: EulerOrder): Euler {
-	out[0] = (x * math.pi) / 180;
-	out[1] = (y * math.pi) / 180;
-	out[2] = (z * math.pi) / 180;
-	out[3] = order;
+    out[0] = (x * math.pi) / 180;
+    out[1] = (y * math.pi) / 180;
+    out[2] = (z * math.pi) / 180;
+    out[3] = order;
 
-	return out;
+    return out;
 }
 
 /**
@@ -63,103 +65,103 @@ export function fromDegrees(out: Euler, x: number, y: number, z: number, order: 
  * @param order The order of the Euler angles.
  * @returns The output Euler.
  */
-export function fromRotationMat4(out: Euler, rotationMatrix: Mat4, order: EulerOrder = out[3] || "xyz"): Euler {
-	const m11 = rotationMatrix[0];
-	const m12 = rotationMatrix[4];
-	const m13 = rotationMatrix[8];
-	const m21 = rotationMatrix[1];
-	const m22 = rotationMatrix[5];
-	const m23 = rotationMatrix[9];
-	const m31 = rotationMatrix[2];
-	const m32 = rotationMatrix[6];
-	const m33 = rotationMatrix[10];
+export function fromRotationMat4(out: Euler, rotationMatrix: Mat4, order: EulerOrder = out[3] || 'xyz'): Euler {
+    const m11 = rotationMatrix[0];
+    const m12 = rotationMatrix[4];
+    const m13 = rotationMatrix[8];
+    const m21 = rotationMatrix[1];
+    const m22 = rotationMatrix[5];
+    const m23 = rotationMatrix[9];
+    const m31 = rotationMatrix[2];
+    const m32 = rotationMatrix[6];
+    const m33 = rotationMatrix[10];
 
-	switch (order) {
-		case "xyz":
-			out[1] = math.asin(clamp(m13, -1, 1));
+    switch (order) {
+        case 'xyz':
+            out[1] = math.asin(clamp(m13, -1, 1));
 
-			if (math.abs(m13) < 0.9999999) {
-				out[0] = math.atan2(-m23, m33);
-				out[2] = math.atan2(-m12, m11);
-			} else {
-				out[0] = math.atan2(m32, m22);
-				out[2] = 0;
-			}
+            if (math.abs(m13) < 0.9999999) {
+                out[0] = math.atan2(-m23, m33);
+                out[2] = math.atan2(-m12, m11);
+            } else {
+                out[0] = math.atan2(m32, m22);
+                out[2] = 0;
+            }
 
-			break;
+            break;
 
-		case "yxz":
-			out[0] = math.asin(-clamp(m23, -1, 1));
+        case 'yxz':
+            out[0] = math.asin(-clamp(m23, -1, 1));
 
-			if (math.abs(m23) < 0.9999999) {
-				out[1] = math.atan2(m13, m33);
-				out[2] = math.atan2(m21, m22);
-			} else {
-				out[1] = math.atan2(-m31, m11);
-				out[2] = 0;
-			}
+            if (math.abs(m23) < 0.9999999) {
+                out[1] = math.atan2(m13, m33);
+                out[2] = math.atan2(m21, m22);
+            } else {
+                out[1] = math.atan2(-m31, m11);
+                out[2] = 0;
+            }
 
-			break;
+            break;
 
-		case "zxy":
-			out[0] = math.asin(clamp(m32, -1, 1));
+        case 'zxy':
+            out[0] = math.asin(clamp(m32, -1, 1));
 
-			if (math.abs(m32) < 0.9999999) {
-				out[1] = math.atan2(-m31, m33);
-				out[2] = math.atan2(-m12, m22);
-			} else {
-				out[1] = 0;
-				out[2] = math.atan2(m21, m11);
-			}
+            if (math.abs(m32) < 0.9999999) {
+                out[1] = math.atan2(-m31, m33);
+                out[2] = math.atan2(-m12, m22);
+            } else {
+                out[1] = 0;
+                out[2] = math.atan2(m21, m11);
+            }
 
-			break;
+            break;
 
-		case "zyx":
-			out[1] = math.asin(-clamp(m31, -1, 1));
+        case 'zyx':
+            out[1] = math.asin(-clamp(m31, -1, 1));
 
-			if (math.abs(m31) < 0.9999999) {
-				out[0] = math.atan2(m32, m33);
-				out[2] = math.atan2(m21, m11);
-			} else {
-				out[0] = 0;
-				out[2] = math.atan2(-m12, m22);
-			}
+            if (math.abs(m31) < 0.9999999) {
+                out[0] = math.atan2(m32, m33);
+                out[2] = math.atan2(m21, m11);
+            } else {
+                out[0] = 0;
+                out[2] = math.atan2(-m12, m22);
+            }
 
-			break;
+            break;
 
-		case "yzx":
-			out[2] = math.asin(clamp(m21, -1, 1));
+        case 'yzx':
+            out[2] = math.asin(clamp(m21, -1, 1));
 
-			if (math.abs(m21) < 0.9999999) {
-				out[0] = math.atan2(-m23, m22);
-				out[1] = math.atan2(-m31, m11);
-			} else {
-				out[0] = 0;
-				out[1] = math.atan2(m13, m33);
-			}
+            if (math.abs(m21) < 0.9999999) {
+                out[0] = math.atan2(-m23, m22);
+                out[1] = math.atan2(-m31, m11);
+            } else {
+                out[0] = 0;
+                out[1] = math.atan2(m13, m33);
+            }
 
-			break;
+            break;
 
-		case "xzy":
-			out[2] = math.asin(-clamp(m12, -1, 1));
+        case 'xzy':
+            out[2] = math.asin(-clamp(m12, -1, 1));
 
-			if (math.abs(m12) < 0.9999999) {
-				out[0] = math.atan2(m32, m22);
-				out[1] = math.atan2(m13, m11);
-			} else {
-				out[0] = math.atan2(-m23, m33);
-				out[1] = 0;
-			}
+            if (math.abs(m12) < 0.9999999) {
+                out[0] = math.atan2(m32, m22);
+                out[1] = math.atan2(m13, m11);
+            } else {
+                out[0] = math.atan2(-m23, m33);
+                out[1] = 0;
+            }
 
-			break;
+            break;
 
-		default:
-			warn(`encountered an unknown order: ${order}`);
-	}
+        default:
+            warn(`encountered an unknown order: ${order}`);
+    }
 
-	out[3] = order;
+    out[3] = order;
 
-	return out;
+    return out;
 }
 
 /**
@@ -170,7 +172,7 @@ export function fromRotationMat4(out: Euler, rotationMatrix: Mat4, order: EulerO
  * @returns True if the euler angles are equal, false otherwise.
  */
 export function exactEquals(a: Euler, b: Euler): boolean {
-	return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3];
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3];
 }
 
 /**
@@ -181,18 +183,18 @@ export function exactEquals(a: Euler, b: Euler): boolean {
  * @returns True if the euler angles are equal, false otherwise.
  */
 export function equals(a: Euler, b: Euler): boolean {
-	const a0 = a[0];
-	const a1 = a[1];
-	const a2 = a[2];
-	const b0 = b[0];
-	const b1 = b[1];
-	const b2 = b[2];
-	return (
-		math.abs(a0 - b0) <= EPSILON * math.max(1.0, math.abs(a0), math.abs(b0)) &&
-		math.abs(a1 - b1) <= EPSILON * math.max(1.0, math.abs(a1), math.abs(b1)) &&
-		math.abs(a2 - b2) <= EPSILON * math.max(1.0, math.abs(a2), math.abs(b2)) &&
-		a[3] === b[3]
-	);
+    const a0 = a[0];
+    const a1 = a[1];
+    const a2 = a[2];
+    const b0 = b[0];
+    const b1 = b[1];
+    const b2 = b[2];
+    return (
+        math.abs(a0 - b0) <= EPSILON * math.max(1.0, math.abs(a0), math.abs(b0)) &&
+        math.abs(a1 - b1) <= EPSILON * math.max(1.0, math.abs(a1), math.abs(b1)) &&
+        math.abs(a2 - b2) <= EPSILON * math.max(1.0, math.abs(a2), math.abs(b2)) &&
+        a[3] === b[3]
+    );
 }
 
 const _setFromQuaternionRotationMatrix = /*@__PURE__*/ mat4.create();
@@ -205,8 +207,8 @@ const _setFromQuaternionRotationMatrix = /*@__PURE__*/ mat4.create();
  * @returns The output Euler
  */
 export function fromQuat(out: Euler, q: Quat, order: EulerOrder): Euler {
-	mat4.fromQuat(_setFromQuaternionRotationMatrix, q);
-	return fromRotationMat4(out, _setFromQuaternionRotationMatrix, order);
+    mat4.fromQuat(_setFromQuaternionRotationMatrix, q);
+    return fromRotationMat4(out, _setFromQuaternionRotationMatrix, order);
 }
 
 const _reorderQuaternion = /*@__PURE__*/ quat.create();
@@ -219,7 +221,7 @@ const _reorderQuaternion = /*@__PURE__*/ quat.create();
  * @returns The output Euler.
  */
 export function reorder(out: Euler, a: Euler, order: EulerOrder): Euler {
-	quat.fromEuler(_reorderQuaternion, a);
-	fromQuat(out, _reorderQuaternion, order);
-	return out;
+    quat.fromEuler(_reorderQuaternion, a);
+    fromQuat(out, _reorderQuaternion, order);
+    return out;
 }

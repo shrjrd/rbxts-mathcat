@@ -15,15 +15,21 @@
 		"moduleDetection": "force",
 		"strict": true,
 		"target": "ESNext",
-		"typeRoots": ["node_modules/@rbxts"],
-
+		"typeRoots": [
+			"node_modules/@rbxts"
+		],
+		"types": [
+			"types",
+			"compiler-types"
+		],
+		"ignoreDeprecations": "6.0",
 		// configurable
-		"rootDirs": ["src", "tst"],
+		"rootDir": "src",
 		"outDir": "out",
 		"incremental": true,
 		"tsBuildInfoFile": "out/tsconfig.tsbuildinfo",
 		"declaration": true,
 		"baseUrl": ".",
-		"paths": {}
+		"paths": {},
 	}
 }

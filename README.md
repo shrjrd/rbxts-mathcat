@@ -1,5 +1,8 @@
-```sh
-> npm install @rbxts/mathcat
+```bash
+npm install @rbxts/mathcat
+```
+```bash
+wally install shrjrd/mathcat
 ```
 
 # mathcat

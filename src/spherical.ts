@@ -1,5 +1,7 @@
-import * as common from "./common";
-import type { Spherical, Vec2, Vec3 } from "./types";
+//!native
+
+import * as common from './common';
+import type { Spherical, Vec2, Vec3 } from './types';
 
 /**
  * Creates a new spherical coordinate at r=1, theta=0, phi=0
@@ -7,7 +9,7 @@ import type { Spherical, Vec2, Vec3 } from "./types";
  * @returns a new Spherical
  */
 export function create(): Spherical {
-	return [1, 0, 0];
+    return [1, 0, 0];
 }
 
 /**
@@ -19,11 +21,11 @@ export function create(): Spherical {
  * @returns a new Spherical
  */
 export function fromValues(r: number, theta: number, phi: number): Spherical {
-	const out: Spherical = [0, 0, 0];
-	out[0] = r;
-	out[1] = theta;
-	out[2] = phi;
-	return out;
+    const out: Spherical = [0, 0, 0];
+    out[0] = r;
+    out[1] = theta;
+    out[2] = phi;
+    return out;
 }
 
 /**
@@ -33,11 +35,11 @@ export function fromValues(r: number, theta: number, phi: number): Spherical {
  * @returns a new Spherical
  */
 export function clone(a: Spherical): Spherical {
-	const out: Spherical = [0, 0, 0];
-	out[0] = a[0];
-	out[1] = a[1];
-	out[2] = a[2];
-	return out;
+    const out: Spherical = [0, 0, 0];
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    return out;
 }
 
 /**
@@ -48,10 +50,10 @@ export function clone(a: Spherical): Spherical {
  * @returns out
  */
 export function copy(out: Spherical, a: Spherical): Spherical {
-	out[0] = a[0];
-	out[1] = a[1];
-	out[2] = a[2];
-	return out;
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    return out;
 }
 
 /**
@@ -64,10 +66,10 @@ export function copy(out: Spherical, a: Spherical): Spherical {
  * @returns out
  */
 export function set(out: Spherical, r: number, theta: number, phi: number): Spherical {
-	out[0] = r;
-	out[1] = theta;
-	out[2] = phi;
-	return out;
+    out[0] = r;
+    out[1] = theta;
+    out[2] = phi;
+    return out;
 }
 
 /**
@@ -78,10 +80,10 @@ export function set(out: Spherical, r: number, theta: number, phi: number): Sphe
  * @returns out
  */
 export function normalize(out: Spherical, a: Spherical): Spherical {
-	out[0] = 1;
-	out[1] = a[1];
-	out[2] = a[2];
-	return out;
+    out[0] = 1;
+    out[1] = a[1];
+    out[2] = a[2];
+    return out;
 }
 
 /**
@@ -93,18 +95,18 @@ export function normalize(out: Spherical, a: Spherical): Spherical {
  * @returns out
  */
 export function scale(out: Spherical, a: Spherical, s: number): Spherical {
-	out[0] = a[0] * s;
-	out[1] = a[1];
-	out[2] = a[2];
-	return out;
+    out[0] = a[0] * s;
+    out[1] = a[1];
+    out[2] = a[2];
+    return out;
 }
 
 /**
  * Wraps an angle (in radians) into the range [-π, π].
  */
 function wrapAngle(a: number): number {
-	const TAU = math.pi * 2;
-	return a - TAU * math.floor((a + math.pi) / TAU);
+    const TAU = math.pi * 2;
+    return a - TAU * math.floor((a + math.pi) / TAU);
 }
 
 /**
@@ -118,10 +120,10 @@ function wrapAngle(a: number): number {
  * @returns out
  */
 export function lerp(out: Spherical, a: Spherical, b: Spherical, t: number): Spherical {
-	out[0] = common.lerp(a[0], b[0], t);
-	out[1] = a[1] + wrapAngle(b[1] - a[1]) * t;
-	out[2] = a[2] + wrapAngle(b[2] - a[2]) * t;
-	return out;
+    out[0] = common.lerp(a[0], b[0], t);
+    out[1] = a[1] + wrapAngle(b[1] - a[1]) * t;
+    out[2] = a[2] + wrapAngle(b[2] - a[2]) * t;
+    return out;
 }
 
 /**
@@ -135,14 +137,14 @@ export function lerp(out: Spherical, a: Spherical, b: Spherical, t: number): Sph
  * @returns out
  */
 export function setFromVec3(out: Spherical, v: Vec3): Spherical {
-	const x = v[0];
-	const y = v[1];
-	const z = v[2];
-	const r = math.sqrt(x * x + y * y + z * z);
-	out[0] = r;
-	out[1] = r === 0 ? 0 : math.atan2(x, z);
-	out[2] = r === 0 ? 0 : math.acos(math.max(-1, math.min(1, y / r)));
-	return out;
+    const x = v[0];
+    const y = v[1];
+    const z = v[2];
+    const r = math.sqrt(x * x + y * y + z * z);
+    out[0] = r;
+    out[1] = r === 0 ? 0 : math.atan2(x, z);
+    out[2] = r === 0 ? 0 : math.acos(math.max(-1, math.min(1, y / r)));
+    return out;
 }
 
 /** @alias setFromVec3 */
@@ -158,11 +160,11 @@ export const fromVec3 = setFromVec3;
  * @returns out
  */
 export function makeSafe(out: Spherical, a: Spherical): Spherical {
-	const EPS = common.EPSILON;
-	out[0] = a[0];
-	out[1] = a[1];
-	out[2] = math.max(EPS, math.min(math.pi - EPS, a[2]));
-	return out;
+    const EPS = common.EPSILON;
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = math.max(EPS, math.min(math.pi - EPS, a[2]));
+    return out;
 }
 
 /**
@@ -176,14 +178,14 @@ export function makeSafe(out: Spherical, a: Spherical): Spherical {
  * @returns out
  */
 export function toVec3(out: Vec3, a: Spherical): Vec3 {
-	const r = a[0];
-	const theta = a[1];
-	const phi = a[2];
-	const sinPhi = math.sin(phi);
-	out[0] = r * sinPhi * math.sin(theta);
-	out[1] = r * math.cos(phi);
-	out[2] = r * sinPhi * math.cos(theta);
-	return out;
+    const r = a[0];
+    const theta = a[1];
+    const phi = a[2];
+    const sinPhi = math.sin(phi);
+    out[0] = r * sinPhi * math.sin(theta);
+    out[1] = r * math.cos(phi);
+    out[2] = r * sinPhi * math.cos(theta);
+    return out;
 }
 
 /**
@@ -195,13 +197,13 @@ export function toVec3(out: Vec3, a: Spherical): Vec3 {
  * @returns out
  */
 export function fromVec2(out: Spherical, v: Vec2): Spherical {
-	const x = v[0];
-	const z = v[1];
-	const r = math.sqrt(x * x + z * z);
-	out[0] = r;
-	out[1] = r === 0 ? 0 : math.atan2(x, z);
-	out[2] = math.pi / 2;
-	return out;
+    const x = v[0];
+    const z = v[1];
+    const r = math.sqrt(x * x + z * z);
+    out[0] = r;
+    out[1] = r === 0 ? 0 : math.atan2(x, z);
+    out[2] = math.pi / 2;
+    return out;
 }
 
 /**
@@ -213,13 +215,13 @@ export function fromVec2(out: Spherical, v: Vec2): Spherical {
  * @returns out
  */
 export function toVec2(out: Vec2, a: Spherical): Vec2 {
-	const r = a[0];
-	const theta = a[1];
-	const phi = a[2];
-	const sinPhi = math.sin(phi);
-	out[0] = r * sinPhi * math.sin(theta);
-	out[1] = r * sinPhi * math.cos(theta);
-	return out;
+    const r = a[0];
+    const theta = a[1];
+    const phi = a[2];
+    const sinPhi = math.sin(phi);
+    out[0] = r * sinPhi * math.sin(theta);
+    out[1] = r * sinPhi * math.cos(theta);
+    return out;
 }
 
 /**
@@ -231,7 +233,7 @@ export function toVec2(out: Vec2, a: Spherical): Vec2 {
  * @returns true if approximately equal
  */
 export function equals(a: Spherical, b: Spherical): boolean {
-	return common.equals(a[0], b[0]) && common.equals(a[1], b[1]) && common.equals(a[2], b[2]);
+    return common.equals(a[0], b[0]) && common.equals(a[1], b[1]) && common.equals(a[2], b[2]);
 }
 
 /**
@@ -242,7 +244,7 @@ export function equals(a: Spherical, b: Spherical): boolean {
  * @returns true if exactly equal
  */
 export function exactEquals(a: Spherical, b: Spherical): boolean {
-	return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
 }
 
 /**
@@ -252,7 +254,7 @@ export function exactEquals(a: Spherical, b: Spherical): boolean {
  * @returns string representation
  */
 export function str(a: Spherical): string {
-	return `Spherical(${a[0]}, ${a[1]}, ${a[2]})`;
+    return `Spherical(${a[0]}, ${a[1]}, ${a[2]})`;
 }
 
 /**
@@ -267,10 +269,10 @@ export function str(a: Spherical): string {
  * @returns angle in radians in [0, π]
  */
 export function angleTo(a: Spherical, b: Spherical): number {
-	const phiA = a[2];
-	const phiB = b[2];
-	const dTheta = b[1] - a[1];
-	// hav(c) = hav(phiB - phiA) + sin(phiA) * sin(phiB) * hav(dTheta)
-	const hav = math.sin((phiB - phiA) / 2) ** 2 + math.sin(phiA) * math.sin(phiB) * math.sin(dTheta / 2) ** 2;
-	return 2 * math.asin(math.sqrt(math.max(0, math.min(1, hav))));
+    const phiA = a[2];
+    const phiB = b[2];
+    const dTheta = b[1] - a[1];
+    // hav(c) = hav(phiB - phiA) + sin(phiA) * sin(phiB) * hav(dTheta)
+    const hav = math.sin((phiB - phiA) / 2) ** 2 + math.sin(phiA) * math.sin(phiB) * math.sin(dTheta / 2) ** 2;
+    return 2 * math.asin(math.sqrt(math.max(0, math.min(1, hav))));
 }

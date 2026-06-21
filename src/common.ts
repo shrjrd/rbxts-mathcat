@@ -1,3 +1,5 @@
+//!native
+
 export const EPSILON = 0.000001;
 
 /**
@@ -7,9 +9,9 @@ export const EPSILON = 0.000001;
  * @param a value to round
  */
 export function round(a: number): number {
-	if (a >= 0) return math.round(a);
+    if (a >= 0) return math.round(a);
 
-	return a % 0.5 === 0 ? math.floor(a) : math.round(a);
+    return a % 0.5 === 0 ? math.floor(a) : math.round(a);
 }
 
 const DEGREES_TO_RADIANS = math.pi / 180;
@@ -22,7 +24,7 @@ const RADIANS_TO_DEGREES = 180 / math.pi;
  * @param a Angle in Degrees
  */
 export function degreesToRadians(degrees: number): number {
-	return degrees * DEGREES_TO_RADIANS;
+    return degrees * DEGREES_TO_RADIANS;
 }
 
 /**
@@ -31,7 +33,7 @@ export function degreesToRadians(degrees: number): number {
  * @param a Angle in Radians
  */
 export function radiansToDegrees(radians: number): number {
-	return radians * RADIANS_TO_DEGREES;
+    return radians * RADIANS_TO_DEGREES;
 }
 
 /**
@@ -44,7 +46,7 @@ export function radiansToDegrees(radians: number): number {
  * @returns True if the numbers are approximately equal, false otherwise.
  */
 export function equals(a: number, b: number, epsilon = EPSILON): boolean {
-	return math.abs(a - b) <= epsilon * math.max(1.0, math.abs(a), math.abs(b));
+    return math.abs(a - b) <= epsilon * math.max(1.0, math.abs(a), math.abs(b));
 }
 
 /**
@@ -56,7 +58,7 @@ export function equals(a: number, b: number, epsilon = EPSILON): boolean {
  * @returns
  */
 export function fade(t: number) {
-	return t * t * t * (t * (t * 6 - 15) + 10);
+    return t * t * t * (t * (t * 6 - 15) + 10);
 }
 
 /**
@@ -69,29 +71,29 @@ export function fade(t: number) {
  * @returns
  */
 export function lerp(v0: number, v1: number, t: number) {
-	return v0 * (1 - t) + v1 * t;
+    return v0 * (1 - t) + v1 * t;
 }
 
 /**
  * Clamp a value between min and max
  */
 export const clamp = (value: number, min: number, max: number): number => {
-	return math.max(min, math.min(max, value));
+    return math.max(min, math.min(max, value));
 };
 
 /**
  * Remaps a number from one range to another.
  */
 export function remap(number: number, inLow: number, inHigh: number, outLow: number, outHigh: number): number {
-	const scale = (number - inLow) / (inHigh - inLow);
-	return outLow + scale * (outHigh - outLow);
+    const scale = (number - inLow) / (inHigh - inLow);
+    return outLow + scale * (outHigh - outLow);
 }
 
 /**
  * Remaps a number from one range to another, clamping the result to the output range.
  */
 export function remapClamp(value: number, inLow: number, inHigh: number, outLow: number, outHigh: number): number {
-	const scale = (value - inLow) / (inHigh - inLow);
-	const remapped = outLow + scale * (outHigh - outLow);
-	return math.max(outLow, math.min(outHigh, remapped));
+    const scale = (value - inLow) / (inHigh - inLow);
+    const remapped = outLow + scale * (outHigh - outLow);
+    return math.max(outLow, math.min(outHigh, remapped));
 }

@@ -1,0 +1,2 @@
+[plugins.jest_roblox]
+github = "https://github.com/christopher-buss/jest-roblox-cli/releases/download/v0.3.2/JestRobloxRunner.rbxm"

@@ -1,0 +1,23 @@
+[package]
+name = "shrjrd/mathcat"
+description = "a collection of math helpers for 3D graphics and simulations "
+version = "0.0.12"
+license = "MIT"
+authors = ["Isaac Mason <isaac@isaacmason.com>", "shrjrd"]
+realm = "shared"
+registry = "https://github.com/UpliftGames/wally-index"
+repository = "https://github.com/shrjrd/rbxts-mathcat"
+include = [
+    "out",
+    "out/Number",
+    "out/**/*.luau",
+    "default.project.json",
+    "wally.toml",
+    "README.md",
+    "LICENSE",
+]
+exclude = [
+    "**",
+]
+
+[dependencies]

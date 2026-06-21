@@ -1,16 +1,18 @@
-import type { Box3, Raycast3, Vec3 } from "./types";
-import * as vec3 from "./vec3";
+//!native
+
+import type { Box3, Raycast3, Vec3 } from './types';
+import * as vec3 from './vec3';
 
 /**
  * Creates a new Raycast3 with default values (origin at (0,0,0), direction (0,0,0), length 1.
  * @returns A new Raycast3.
  */
 export function create(): Raycast3 {
-	return {
-		origin: vec3.create(),
-		direction: vec3.fromValues(0, 0, 0),
-		length: 1,
-	};
+    return {
+        origin: vec3.create(),
+        direction: vec3.fromValues(0, 0, 0),
+        length: 1,
+    };
 }
 
 /**
@@ -21,11 +23,11 @@ export function create(): Raycast3 {
  * @returns A new Raycast3.
  */
 export function fromValues(origin: Vec3, direction: Vec3, length: number): Raycast3 {
-	return {
-		origin: vec3.clone(origin),
-		direction: vec3.clone(direction),
-		length,
-	};
+    return {
+        origin: vec3.clone(origin),
+        direction: vec3.clone(direction),
+        length,
+    };
 }
 
 /**
@@ -37,10 +39,10 @@ export function fromValues(origin: Vec3, direction: Vec3, length: number): Rayca
  * @returns The output Raycast3.
  */
 export function set(out: Raycast3, origin: Vec3, direction: Vec3, length: number): Raycast3 {
-	vec3.copy(out.origin, origin);
-	vec3.copy(out.direction, direction);
-	out.length = length;
-	return out;
+    vec3.copy(out.origin, origin);
+    vec3.copy(out.direction, direction);
+    out.length = length;
+    return out;
 }
 
 /**
@@ -50,10 +52,10 @@ export function set(out: Raycast3, origin: Vec3, direction: Vec3, length: number
  * @returns The output Raycast3.
  */
 export function copy(out: Raycast3, a: Raycast3): Raycast3 {
-	vec3.copy(out.origin, a.origin);
-	vec3.copy(out.direction, a.direction);
-	out.length = a.length;
-	return out;
+    vec3.copy(out.origin, a.origin);
+    vec3.copy(out.direction, a.direction);
+    out.length = a.length;
+    return out;
 }
 
 /**
@@ -64,11 +66,11 @@ export function copy(out: Raycast3, a: Raycast3): Raycast3 {
  * @returns The output Raycast3.
  */
 export function fromSegment(out: Raycast3, a: Vec3, b: Vec3): Raycast3 {
-	vec3.copy(out.origin, a);
-	vec3.subtract(out.direction, b, a);
-	out.length = vec3.length(out.direction);
-	vec3.normalize(out.direction, out.direction);
-	return out;
+    vec3.copy(out.origin, a);
+    vec3.subtract(out.direction, b, a);
+    out.length = vec3.length(out.direction);
+    vec3.normalize(out.direction, out.direction);
+    return out;
 }
 
 /**
@@ -77,9 +79,9 @@ export function fromSegment(out: Raycast3, a: Vec3, b: Vec3): Raycast3 {
  * @see intersectsTriangle
  */
 export type IntersectsTriangleResult = {
-	fraction: number;
-	hit: boolean;
-	frontFacing: boolean;
+    fraction: number;
+    hit: boolean;
+    frontFacing: boolean;
 };
 
 /**
@@ -87,11 +89,11 @@ export type IntersectsTriangleResult = {
  * @returns A new IntersectsTriangleResult.
  */
 export function createIntersectsTriangleResult(): IntersectsTriangleResult {
-	return {
-		fraction: 0,
-		hit: false,
-		frontFacing: false,
-	};
+    return {
+        fraction: 0,
+        hit: false,
+        frontFacing: false,
+    };
 }
 
 /**
@@ -106,119 +108,119 @@ export function createIntersectsTriangleResult(): IntersectsTriangleResult {
  * @param backfaceCulling if true, backfaces will not be considered hits
  */
 export function intersectsTriangle(
-	out: IntersectsTriangleResult,
-	ray: Raycast3,
-	a: Vec3,
-	b: Vec3,
-	c: Vec3,
-	backfaceCulling: boolean,
+    out: IntersectsTriangleResult,
+    ray: Raycast3,
+    a: Vec3,
+    b: Vec3,
+    c: Vec3,
+    backfaceCulling: boolean,
 ): void {
-	// compute edge1 = b - a
-	const e1x = b[0] - a[0];
-	const e1y = b[1] - a[1];
-	const e1z = b[2] - a[2];
+    // compute edge1 = b - a
+    const e1x = b[0] - a[0];
+    const e1y = b[1] - a[1];
+    const e1z = b[2] - a[2];
 
-	// compute edge2 = c - a
-	const e2x = c[0] - a[0];
-	const e2y = c[1] - a[1];
-	const e2z = c[2] - a[2];
+    // compute edge2 = c - a
+    const e2x = c[0] - a[0];
+    const e2y = c[1] - a[1];
+    const e2z = c[2] - a[2];
 
-	// compute normal = edge1 × edge2
-	const nx = e1y * e2z - e1z * e2y;
-	const ny = e1z * e2x - e1x * e2z;
-	const nz = e1x * e2y - e1y * e2x;
+    // compute normal = edge1 × edge2
+    const nx = e1y * e2z - e1z * e2y;
+    const ny = e1z * e2x - e1x * e2z;
+    const nz = e1x * e2y - e1y * e2x;
 
-	// determine front vs back facing
-	const dx = ray.direction[0];
-	const dy = ray.direction[1];
-	const dz = ray.direction[2];
-	let DdN = dx * nx + dy * ny + dz * nz;
-	let sign: number;
+    // determine front vs back facing
+    const dx = ray.direction[0];
+    const dy = ray.direction[1];
+    const dz = ray.direction[2];
+    let DdN = dx * nx + dy * ny + dz * nz;
+    let sign: number;
 
-	if (DdN > 0) {
-		// backface
-		if (backfaceCulling) {
-			out.hit = false;
-			out.fraction = 0;
-			out.frontFacing = false;
-			return;
-		}
-		sign = 1;
-	} else if (DdN < 0) {
-		// frontface
-		sign = -1;
-		DdN = -DdN;
-	} else {
-		// ray is parallel to triangle
-		out.hit = false;
-		out.fraction = 0;
-		out.frontFacing = false;
-		return;
-	}
+    if (DdN > 0) {
+        // backface
+        if (backfaceCulling) {
+            out.hit = false;
+            out.fraction = 0;
+            out.frontFacing = false;
+            return;
+        }
+        sign = 1;
+    } else if (DdN < 0) {
+        // frontface
+        sign = -1;
+        DdN = -DdN;
+    } else {
+        // ray is parallel to triangle
+        out.hit = false;
+        out.fraction = 0;
+        out.frontFacing = false;
+        return;
+    }
 
-	// compute diff = ray.origin - a
-	const diffx = ray.origin[0] - a[0];
-	const diffy = ray.origin[1] - a[1];
-	const diffz = ray.origin[2] - a[2];
+    // compute diff = ray.origin - a
+    const diffx = ray.origin[0] - a[0];
+    const diffy = ray.origin[1] - a[1];
+    const diffz = ray.origin[2] - a[2];
 
-	// compute barycentric coordinate b1
-	// DdQxE2 = sign * D · (diff × edge2)
-	const diffCrossE2x = diffy * e2z - diffz * e2y;
-	const diffCrossE2y = diffz * e2x - diffx * e2z;
-	const diffCrossE2z = diffx * e2y - diffy * e2x;
-	const DdQxE2 = sign * (dx * diffCrossE2x + dy * diffCrossE2y + dz * diffCrossE2z);
+    // compute barycentric coordinate b1
+    // DdQxE2 = sign * D · (diff × edge2)
+    const diffCrossE2x = diffy * e2z - diffz * e2y;
+    const diffCrossE2y = diffz * e2x - diffx * e2z;
+    const diffCrossE2z = diffx * e2y - diffy * e2x;
+    const DdQxE2 = sign * (dx * diffCrossE2x + dy * diffCrossE2y + dz * diffCrossE2z);
 
-	if (DdQxE2 < 0) {
-		out.hit = false;
-		out.fraction = 0;
-		out.frontFacing = false;
-		return;
-	}
+    if (DdQxE2 < 0) {
+        out.hit = false;
+        out.fraction = 0;
+        out.frontFacing = false;
+        return;
+    }
 
-	// compute barycentric coordinate b2
-	// DdE1xQ = sign * D · (edge1 × diff)
-	const e1CrossDiffx = e1y * diffz - e1z * diffy;
-	const e1CrossDiffy = e1z * diffx - e1x * diffz;
-	const e1CrossDiffz = e1x * diffy - e1y * diffx;
-	const DdE1xQ = sign * (dx * e1CrossDiffx + dy * e1CrossDiffy + dz * e1CrossDiffz);
+    // compute barycentric coordinate b2
+    // DdE1xQ = sign * D · (edge1 × diff)
+    const e1CrossDiffx = e1y * diffz - e1z * diffy;
+    const e1CrossDiffy = e1z * diffx - e1x * diffz;
+    const e1CrossDiffz = e1x * diffy - e1y * diffx;
+    const DdE1xQ = sign * (dx * e1CrossDiffx + dy * e1CrossDiffy + dz * e1CrossDiffz);
 
-	if (DdE1xQ < 0) {
-		out.hit = false;
-		out.fraction = 0;
-		out.frontFacing = false;
-		return;
-	}
+    if (DdE1xQ < 0) {
+        out.hit = false;
+        out.fraction = 0;
+        out.frontFacing = false;
+        return;
+    }
 
-	// check if b1 + b2 > 1
-	if (DdQxE2 + DdE1xQ > DdN) {
-		out.hit = false;
-		out.fraction = 0;
-		out.frontFacing = false;
-		return;
-	}
+    // check if b1 + b2 > 1
+    if (DdQxE2 + DdE1xQ > DdN) {
+        out.hit = false;
+        out.fraction = 0;
+        out.frontFacing = false;
+        return;
+    }
 
-	// compute intersection distance
-	const QdN = -sign * (diffx * nx + diffy * ny + diffz * nz);
+    // compute intersection distance
+    const QdN = -sign * (diffx * nx + diffy * ny + diffz * nz);
 
-	if (QdN < 0) {
-		out.hit = false;
-		out.fraction = 0;
-		out.frontFacing = false;
-		return;
-	}
+    if (QdN < 0) {
+        out.hit = false;
+        out.fraction = 0;
+        out.frontFacing = false;
+        return;
+    }
 
-	const t = QdN / DdN;
+    const t = QdN / DdN;
 
-	// check if intersection is within ray length
-	if (t <= ray.length) {
-		out.hit = true;
-		out.fraction = t / ray.length;
-		out.frontFacing = sign < 0;
-	} else {
-		out.hit = false;
-		out.fraction = 0;
-		out.frontFacing = false;
-	}
+    // check if intersection is within ray length
+    if (t <= ray.length) {
+        out.hit = true;
+        out.fraction = t / ray.length;
+        out.frontFacing = sign < 0;
+    } else {
+        out.hit = false;
+        out.fraction = 0;
+        out.frontFacing = false;
+    }
 }
 
 /**
@@ -230,37 +232,37 @@ export function intersectsTriangle(
  * @returns true if ray intersects the AABB, false otherwise
  */
 export function intersectsBox3(ray: Raycast3, aabb: Box3): boolean {
-	let tmin = 0;
-	let tmax = ray.length;
+    let tmin = 0;
+    let tmax = ray.length;
 
-	for (let i = 0; i < 3; i++) {
-		const d = ray.direction[i];
+    for (let i = 0; i < 3; i++) {
+        const d = ray.direction[i];
 
-		if (math.abs(d) < 1e-10) {
-			// ray is parallel to slab: check if origin is within slab
-			if (ray.origin[i] < aabb[i] || ray.origin[i] > aabb[i + 3]) {
-				return false;
-			}
-		} else {
-			// compute intersection times with slab
-			const invD = 1 / d;
-			let t0 = (aabb[i] - ray.origin[i]) * invD;
-			let t1 = (aabb[i + 3] - ray.origin[i]) * invD;
+        if (math.abs(d) < 1e-10) {
+            // ray is parallel to slab: check if origin is within slab
+            if (ray.origin[i] < aabb[i] || ray.origin[i] > aabb[i + 3]) {
+                return false;
+            }
+        } else {
+            // compute intersection times with slab
+            const invD = 1 / d;
+            let t0 = (aabb[i] - ray.origin[i]) * invD;
+            let t1 = (aabb[i + 3] - ray.origin[i]) * invD;
 
-			if (invD < 0) {
-				const temp = t0;
-				t0 = t1;
-				t1 = temp;
-			}
+            if (invD < 0) {
+                const temp = t0;
+                t0 = t1;
+                t1 = temp;
+            }
 
-			tmin = math.max(tmin, t0);
-			tmax = math.min(tmax, t1);
+            tmin = math.max(tmin, t0);
+            tmax = math.min(tmax, t1);
 
-			if (tmax < tmin) {
-				return false;
-			}
-		}
-	}
+            if (tmax < tmin) {
+                return false;
+            }
+        }
+    }
 
-	return true;
+    return true;
 }
